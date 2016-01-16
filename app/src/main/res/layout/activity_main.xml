@@ -6,38 +6,42 @@
     android:layout_height="match_parent" >
     <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
     <!--tools:showIn="@layout/activity_my">-->
+    <!--<AutoCompleteTextView android:id="@+id/entry1auto"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:hint="@string/entry1"/>-->
 
-    <EditText android:id="@+id/team"
+    <AutoCompleteTextView android:id="@+id/team"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/teamname"/>
 
-    <EditText android:id="@+id/name1"
+    <AutoCompleteTextView android:id="@+id/name1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/name1" />
 
-    <EditText android:id="@+id/entry1"
+    <AutoCompleteTextView android:id="@+id/entry1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/entry1" />
 
-    <EditText android:id="@+id/name2"
+    <AutoCompleteTextView android:id="@+id/name2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/name2" />
 
-    <EditText android:id="@+id/entry2"
+    <AutoCompleteTextView android:id="@+id/entry2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/entry2" />
 
-    <EditText android:id="@+id/name3"
+    <AutoCompleteTextView android:id="@+id/name3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/name3" />
 
-    <EditText android:id="@+id/entry3"
+    <AutoCompleteTextView android:id="@+id/entry3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/entry3" />
