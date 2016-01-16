@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:padding="10dp">
     <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
     <!--tools:showIn="@layout/activity_my">-->
     <!--<AutoCompleteTextView android:id="@+id/entry1auto"-->
@@ -11,12 +12,22 @@
         <!--android:layout_height="wrap_content"-->
         <!--android:hint="@string/entry1"/>-->
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team Registration"
+        android:textSize="30dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"/>
+
     <AutoCompleteTextView android:id="@+id/team"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/teamname"/>
 
     <AutoCompleteTextView android:id="@+id/name1"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/name1" />
@@ -27,6 +38,7 @@
         android:hint="@string/entry1" />
 
     <AutoCompleteTextView android:id="@+id/name2"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/name2" />
@@ -37,6 +49,7 @@
         android:hint="@string/entry2" />
 
     <AutoCompleteTextView android:id="@+id/name3"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/name3" />
@@ -47,6 +60,7 @@
         android:hint="@string/entry3" />
 
     <Button android:id="@+id/send"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_send"
