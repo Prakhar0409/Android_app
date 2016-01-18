@@ -46,11 +46,30 @@
         android:layout_height="wrap_content"
         android:hint="@string/entry3" />
 
-    <Button android:id="@+id/send"
+    <Button android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_send"
-        android:onClick="sendMessage"/>
+        android:background="@drawable/button_border"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:onClick="register"/>
+
+    <Button
+        android:id="@+id/angry_btn"
+
+        android:text="Button"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+
+        android:layout_width="270dp"
+        android:layout_height="60dp"
+        android:background="@drawable/buttonshape"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        />
 </LinearLayout>
 
 
