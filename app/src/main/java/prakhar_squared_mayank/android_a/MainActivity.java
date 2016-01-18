@@ -1,5 +1,6 @@
 package prakhar_squared_mayank.android_a;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -207,6 +209,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         switch(view.getId())
         {
             case R.id.register:
+                hideKeyboard();
                 if(checkData())
                 {
                     sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);
@@ -222,6 +225,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 break;
         }
     }
+
+
+    public void hideKeyboard()
+    {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     public boolean checkData() {
         return true;
     }

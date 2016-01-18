@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="#ffffff">
 
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:gravity="center">
     <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
     <!--tools:showIn="@layout/activity_my">-->
     <!--<AutoCompleteTextView android:id="@+id/entry1auto"-->
@@ -26,44 +28,138 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"/>
 
+
+
     <AutoCompleteTextView android:id="@+id/team"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/teamname"/>
 
-    <AutoCompleteTextView android:id="@+id/name1"
-        android:layout_marginTop="10dp"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/name1" />
+        android:layout_marginTop="15dp">
 
-    <AutoCompleteTextView android:id="@+id/entry1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/entry1" />
+        <ImageView
+            android:id="@+id/nameimage1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/nameicon"
+            android:layout_marginTop="10dp"/>
 
-    <AutoCompleteTextView android:id="@+id/name2"
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/name2" />
+        <AutoCompleteTextView android:id="@+id/name1"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/name1"
+            android:layout_toRightOf="@id/nameimage1"
+            android:layout_alignBottom="@id/nameimage1"
+            android:layout_marginBottom="-6dp"/>
 
-    <AutoCompleteTextView android:id="@+id/entry2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/entry2" />
+    </RelativeLayout>
 
-    <AutoCompleteTextView android:id="@+id/name3"
-        android:layout_marginTop="10dp"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/name3" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/entryimage1"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/entryicon"
+            android:layout_marginTop="15dp"/>
+        <AutoCompleteTextView android:id="@+id/entry1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/entry1"
+            android:layout_toRightOf="@id/entryimage1"
+            android:layout_alignBottom="@id/entryimage1"
+            android:layout_marginBottom="-6dp"/>
+    </RelativeLayout>
 
-    <AutoCompleteTextView android:id="@+id/entry3"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/entry3" />
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:id="@+id/nameimage2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/nameicon"/>
+
+        <AutoCompleteTextView android:id="@+id/name2"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/name2"
+            android:layout_toRightOf="@id/nameimage2"
+            android:layout_alignBottom="@id/nameimage2"
+            android:layout_marginBottom="-6dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/entryimage2"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/entryicon"
+            android:layout_marginTop="15dp"/>
+
+        <AutoCompleteTextView android:id="@+id/entry2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/entry2"
+            android:layout_toRightOf="@id/entryimage2"
+            android:layout_marginBottom="-6dp"
+            android:layout_alignBottom="@id/entryimage2"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/nameimage3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/nameicon"
+            android:layout_marginTop="15dp"/>
+
+        <AutoCompleteTextView android:id="@+id/name3"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/name3"
+            android:layout_toRightOf="@id/nameimage3"
+            android:layout_marginBottom="-6dp"
+            android:layout_alignBottom="@id/nameimage3"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/entryimage3"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/entryicon"
+            android:layout_marginTop="15dp"/>
+
+        <AutoCompleteTextView android:id="@+id/entry3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/entry3"
+            android:layout_toRightOf="@id/entryimage3"
+            android:layout_marginBottom="-6dp"
+            android:layout_alignBottom="@id/entryimage3"/>
+
+    </RelativeLayout>
 
     <Button android:id="@+id/register"
         android:layout_width="wrap_content"
@@ -73,22 +169,7 @@
         android:layout_marginTop="30dp"
         android:layout_gravity="center"
         android:onClick="register"/>
-
-    <Button
-        android:id="@+id/angry_btn"
-
-        android:text="Button"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
-
-        android:layout_width="270dp"
-        android:layout_height="60dp"
-        android:background="@drawable/buttonshape"
-        android:shadowColor="#A8A8A8"
-        android:shadowDx="0"
-        android:shadowDy="0"
-        android:shadowRadius="5" />
-</LinearLayout>
+    </LinearLayout>
 
 
     <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
