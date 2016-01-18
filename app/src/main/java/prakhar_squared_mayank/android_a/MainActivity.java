@@ -12,7 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -44,14 +46,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private static final Pattern entryNumbersPat=Pattern.compile("201[234][A-Z][A-Z][1257]0[0-9]{3}",Pattern.CASE_INSENSITIVE );
 
-<<<<<<< HEAD
-=======
-    private EditText team,name1,name2,name3,entry1,entry2,entry3;
+    private EditText team,name1,name2,name3;
     //private String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
 
 //    private static final String[] ent=new String[];//{"prakhar","shubham","mohit"};
 
->>>>>>> master
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,18 +76,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         String[] entryNumbers= (String[]) entries.toArray(new String[entries.size()]);
 
-<<<<<<< HEAD
 
+        team=(AutoCompleteTextView) findViewById(R.id.team);
+        name1=(AutoCompleteTextView) findViewById(R.id.name1);
+        name2=(AutoCompleteTextView) findViewById(R.id.name2);
+        name3=(AutoCompleteTextView) findViewById(R.id.name3);
         entr1 = (AutoCompleteTextView) findViewById(R.id.entry1);
         entr2 = (AutoCompleteTextView) findViewById(R.id.entry2);
         entr3 = (AutoCompleteTextView) findViewById(R.id.entry3);
 
-=======
-        AutoCompleteTextView entr1=(AutoCompleteTextView) findViewById(R.id.entry1);
-        AutoCompleteTextView entr2=(AutoCompleteTextView) findViewById(R.id.entry2);
-        AutoCompleteTextView entr3=(AutoCompleteTextView) findViewById(R.id.entry3);
-        //AutoCompleteTextView entr1=(AutoCompleteTextView) findViewById(R.id.entry1auto);
->>>>>>> master
         ArrayAdapter <String> aa=new ArrayAdapter<String>(this,R.layout.select_dialog_item_material,entryNumbers);
         entr1.setThreshold(1);entr1.setAdapter(aa);
         entr2.setThreshold(1);entr2.setAdapter(aa);
@@ -97,55 +93,47 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 *
 * When button is pressed
 * */
-//        Button register=(Button) findViewById(R.id.register);
-//        register.setOnClickListener(this);
     }
 
-<<<<<<< HEAD
-        sendButton = (Button)findViewById(R.id.send);
-        sendButton.setOnClickListener(this);
-=======
     public void register(View view){
-        team=(AutoCompleteTextView) findViewById(R.id.team);
-        //String t=team.getText().toString();
-        name1=(AutoCompleteTextView) findViewById(R.id.name1);
-        name2=(AutoCompleteTextView) findViewById(R.id.name2);
-        name3=(AutoCompleteTextView) findViewById(R.id.name3);
-        entry1=(AutoCompleteTextView) findViewById(R.id.entry1);
-        entry2=(AutoCompleteTextView) findViewById(R.id.entry2);
-        entry3=(AutoCompleteTextView) findViewById(R.id.entry3);
-        final String teams="abc";//team.getText().toString().trim();
-        final String name1s="abc";//name1.getText().toString().trim();
-        final String name2s="abc";//name2.getText().toString().trim();
-        final String name3s="abc";//name3.getText().toString().trim();
-        final String entry1s="abc";//entry1.getText().toString().trim();
-        final String entry2s="abc";//entry2.getText().toString().trim();
-        final String entry3s="abc";//entry3.getText().toString().trim();
+        final String teams=team.getText().toString().trim();
+        final String name1s=name1.getText().toString().trim();
+        final String name2s=name2.getText().toString().trim();
+        final String name3s=name3.getText().toString().trim();
+        final String entry1s=entr1.getText().toString().trim();
+        final String entry2s=entr2.getText().toString().trim();
+        final String entry3s=entr3.getText().toString().trim();
 
 
-        Map<String,String> params=new HashMap<String,String>();
-        params.put("teamname",teams);
-        params.put("name1",name1s);
-        params.put("name2",name2s);
-        params.put("name3",name3s);
-        params.put("entry1",entry1s);
-        params.put("entry2",entry2s);
-        params.put("entry3", entry3s);
+//        Map<String,String> params=new HashMap<String,String>();
+//        params.put("teamname",teams);
+//        params.put("name1",name1s);
+//        params.put("name2",name2s);
+//        params.put("name3",name3s);
+//        params.put("entry1",entry1s);
+//        params.put("entry2",entry2s);
+//        params.put("entry3", entry3s);
+//
+//        JSONObject param=new JSONObject(params);
 
-        JSONObject param=new JSONObject(params);
-       // String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
-        String url="http://cse.iitd.ac.in/scripts/test.php";
+        String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
+//        String url="http://cse.iitd.ac.in/scripts/test.php";
 
         System.out.println("Someone clicked");
 
-     //   JsonObjectRequest req=new JsonObjectRequest(Request.Method.POST,url,param, new Response.Listener<JSONObject>() {
-            StringRequest req=new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
+//        JsonObjectRequest req=new JsonObjectRequest(Request.Method.POST,url,param, new Response.Listener<JSONObject>() {
+        StringRequest req=new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
                 try {
                     System.out.println("You are in yupieee");
                     System.out.println("teamname"+teams);
                     System.out.println(response);
+                    System.out.println("hhe");
+                    JSONObject res = new JSONObject(response);
+                    String success = res.getString("RESPONSE_SUCCESS");
+                    String msg = res.getString("RESPONSE_MESSAGE");
+                    displayMessage(success, msg);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -155,10 +143,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        }
-
-        ){
-
+        }){
             @Override
             protected Map<String,String> getParams() {
                 Map<String, String> params = new HashMap<String,String>();
@@ -177,14 +162,24 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 return "application/x-www-form-urlencoded;";
             }
         };
-
         Volley.newRequestQueue(this).add(req);
 //        if(volley_singleton.getInstance()==null) {
 //            volley_singleton a = new volley_singleton();
 //        }
       //  volley_singleton b=volley_singleton.getInstance();
        // b.getRequestQueue().add(req);
->>>>>>> master
+    }
+
+    public void displayMessage(String code, String msg)
+    {
+        if(code.equals("1"))
+        {
+            Toast.makeText(this, "Success with message: "+msg, Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Failure with message: "+msg, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -211,15 +206,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        switch(view.getId())
-        {
-            case R.id.send:
-                if(checkData())
-                {
-                    sendData();
-                }
-                break;
-        }
+//        switch(view.getId())
+//        {
+//            case R.id.send:
+//                if(checkData())
+//                {
+//                    sendData();
+//                }
+//                break;
+//        }
     }
 
     public boolean checkData() {

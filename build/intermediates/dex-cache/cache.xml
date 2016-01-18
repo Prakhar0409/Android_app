@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/mayank/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/22.1.1/support-annotations-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="01d051a6bfb1218b1db2d3a5af0480ac2c25c42a">
+        <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/support-annotations-22.1.1-90413f54ffc7877648e27b32d2d5e44e2de469e4.jar" />
+    </item>
+    <item
+        jar="/Users/mayank/GitHub/Android_app/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="a3ff3c506644c820eb2bdf06e8339f72be578551">
+        <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/classes-5e1d89d13924bd1c9a89eed61618134dfff8df7f.jar" />
+    </item>
+    <item
+        jar="/Users/mayank/GitHub/Android_app/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/libs/internal_impl-22.1.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9e070ad32b2700b0343e8e0cccc437733d91ba3a">
+        <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/internal_impl-22.1.1-c9135fa7dec97521c1e4433829f9a2409bc34e4e.jar" />
+    </item>
+    <item
+        jar="/Users/mayank/GitHub/Android_app/app/build/intermediates/exploded-aar/Android_app/volley/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="111bc4864ce4ab0e492c6f398e513a475915ad36">
+        <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/classes-966bbf44d76cb30befdc4a3e89050d808d2988cf.jar" />
+    </item>
+    <item
+        jar="/Users/mayank/GitHub/Android_app/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c95ba8152923e4872e86a82cfcba9a51c0214328">
+        <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/classes-3e0c1cf1de32ea4fad051c5e25dd399c6c77a27f.jar" />
+    </item>
+
+</items>
