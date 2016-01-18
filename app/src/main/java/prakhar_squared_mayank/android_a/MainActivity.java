@@ -5,6 +5,7 @@ import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,13 +90,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         entr1.setThreshold(1);entr1.setAdapter(aa);
         entr2.setThreshold(1);entr2.setAdapter(aa);
         entr3.setThreshold(1);entr3.setAdapter(aa);
+
+        sendButton = (Button) findViewById(R.id.register);
+        sendButton.setOnClickListener(this);
 /*Autocomplete textboxes logic end
 *
 * When button is pressed
 * */
     }
 
-    public void register(View view){
+    public void register(){
         final String teams=team.getText().toString().trim();
         final String name1s=name1.getText().toString().trim();
         final String name2s=name2.getText().toString().trim();
@@ -126,10 +130,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             @Override
             public void onResponse(String response) {
                 try {
-                    System.out.println("You are in yupieee");
-                    System.out.println("teamname"+teams);
-                    System.out.println(response);
-                    System.out.println("hhe");
+                    Log.d("Response", "Got Response");
                     JSONObject res = new JSONObject(response);
                     String success = res.getString("RESPONSE_SUCCESS");
                     String msg = res.getString("RESPONSE_MESSAGE");
@@ -206,15 +207,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-//        switch(view.getId())
-//        {
-//            case R.id.send:
-//                if(checkData())
-//                {
-//                    sendData();
-//                }
-//                break;
-//        }
+        switch(view.getId())
+        {
+            case R.id.register:
+                if(checkData())
+                {
+                    register();
+                }
+                break;
+        }
     }
 
     public boolean checkData() {
