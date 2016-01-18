@@ -1,8 +1,8 @@
 package prakhar_squared_mayank.android_a;
-
 import android.app.DownloadManager;
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +14,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
 import com.android.volley.NoConnectionError;
@@ -26,7 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.File;
@@ -41,26 +39,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     AutoCompleteTextView entr1;
     AutoCompleteTextView entr2;
     AutoCompleteTextView entr3;
     Button sendButton;
-
     private static final Pattern entryNumbersPat=Pattern.compile("201[234][A-Z][A-Z][1257]0[0-9]{3}",Pattern.CASE_INSENSITIVE );
-
     private EditText team,name1,name2,name3;
     //private String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
-
 //    private static final String[] ent=new String[];//{"prakhar","shubham","mohit"};
-
+    private MediaPlayer sound_player;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 /*
 * Logic for adding autocomplete feature*
 * */
@@ -74,14 +66,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             while((entry=br.readLine())!=null){
                 entries.add(entry);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         String[] entryNumbers= (String[]) entries.toArray(new String[entries.size()]);
-
-
         team=(AutoCompleteTextView) findViewById(R.id.team);
         name1=(AutoCompleteTextView) findViewById(R.id.name1);
         name2=(AutoCompleteTextView) findViewById(R.id.name2);
@@ -89,12 +77,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         entr1 = (AutoCompleteTextView) findViewById(R.id.entry1);
         entr2 = (AutoCompleteTextView) findViewById(R.id.entry2);
         entr3 = (AutoCompleteTextView) findViewById(R.id.entry3);
-
         ArrayAdapter <String> aa=new ArrayAdapter<String>(this,R.layout.select_dialog_item_material,entryNumbers);
         entr1.setThreshold(1);entr1.setAdapter(aa);
         entr2.setThreshold(1);entr2.setAdapter(aa);
         entr3.setThreshold(1);entr3.setAdapter(aa);
-
         sendButton = (Button) findViewById(R.id.register);
         sendButton.setOnClickListener(this);
 /*Autocomplete textboxes logic end
@@ -102,7 +88,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 * When button is pressed
 * */
     }
-
     public void register(){
         final String teams=team.getText().toString().trim();
         final String name1s=name1.getText().toString().trim();
@@ -111,8 +96,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         final String entry1s=entr1.getText().toString().trim();
         final String entry2s=entr2.getText().toString().trim();
         final String entry3s=entr3.getText().toString().trim();
-
-
 //        Map<String,String> params=new HashMap<String,String>();
 //        params.put("teamname",teams);
 //        params.put("name1",name1s);
@@ -123,12 +106,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 //        params.put("entry3", entry3s);
 //
 //        JSONObject param=new JSONObject(params);
-
         String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
 //        String url="http://cse.iitd.ac.in/scripts/test.php";
-
         System.out.println("Someone clicked");
-
 //        JsonObjectRequest req=new JsonObjectRequest(Request.Method.POST,url,param, new Response.Listener<JSONObject>() {
         StringRequest req=new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
             @Override
@@ -141,7 +121,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     displayMessage(success, msg);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ///
                 }
             }
         }, new Response.ErrorListener() {
@@ -150,14 +129,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 error.printStackTrace();
                 if(error instanceof TimeoutError) {
                     showToast("The connection timed out.");
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof NoConnectionError) {
                     showToast("No internet connection available.");
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof NetworkError) {
                     showToast("A network error occurred.");
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof ServerError) {
                     showToast("A server error occurred.");
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else {
                     showToast("An unidentified error occurred.");
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 }
             }
         }){
@@ -173,7 +157,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 params.put("entry3", entry3s);
                 return params;
             }
-
             @Override
             public String getBodyContentType(){
                 return "application/x-www-form-urlencoded;";
@@ -183,10 +166,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 //        if(volley_singleton.getInstance()==null) {
 //            volley_singleton a = new volley_singleton();
 //        }
-      //  volley_singleton b=volley_singleton.getInstance();
-       // b.getRequestQueue().add(req);
+        //  volley_singleton b=volley_singleton.getInstance();
+        // b.getRequestQueue().add(req);
     }
-
     public void displayMessage(String code, String msg)
     {
         if(code.equals("1"))
@@ -198,34 +180,28 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             showToast("Failure with message: "+msg);
         }
     }
-
     public void showToast(String msg)
     {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onClick(View view) {
         switch(view.getId())
@@ -233,12 +209,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             case R.id.register:
                 if(checkData())
                 {
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);
                     register();
                 }
+                else
+                {
+                    showToast("Input is invalid");
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+                }
+                sound_player.setLooping(false);
+                sound_player.start();
                 break;
         }
     }
-
     public boolean checkData() {
         return true;
     }
