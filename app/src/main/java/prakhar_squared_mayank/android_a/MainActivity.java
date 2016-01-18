@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private static final Pattern entryNumbersPat=Pattern.compile("201[234][A-Z][A-Z][1257]0[0-9]{3}",Pattern.CASE_INSENSITIVE );
 
-    private EditText team,name1,name2,name3;
+    private AutoCompleteTextView team,name1,name2,name3;
     //private String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
 
 //    private static final String[] ent=new String[];//{"prakhar","shubham","mohit"};
@@ -67,21 +67,33 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 * Logic for adding autocomplete feature*
 * */
         List<String> entries=new ArrayList<String>();
+        List<String> names=new ArrayList<String>();
         try {
             InputStream is = getApplicationContext().getResources().openRawResource(R.raw.entry_number_list);//am.open("entry_number_list.txt");
             InputStreamReader inputStreamReader=new InputStreamReader(is);
             BufferedReader br=new BufferedReader(inputStreamReader);
             String entry;
-            //br=new BufferedReader(new FileReader("entryNumberList.txt"));
+//            br=new BufferedReader(new FileReader("entryNumberList.txt"));
             while((entry=br.readLine())!=null){
-                entries.add(entry);
+                String entryNum="";
+                int index;
+                for(index=0;entry.charAt(index)!='%';index++) {
+                    entryNum += entry.charAt(index);
+                }
+                entries.add(entryNum);
+
+                String name="";
+                for(;index<entry.length();index++) {
+                    name += name.charAt(index);
+                }
+                names.add(name+" ("+entryNum+")");
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        String[] entryNumbers= (String[]) entries.toArray(new String[entries.size()]);
+        String[] nameAdapter= (String[]) entries.toArray(new String[entries.size()]);
 
 
         team=(AutoCompleteTextView) findViewById(R.id.team);
@@ -92,10 +104,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         entr2 = (AutoCompleteTextView) findViewById(R.id.entry2);
         entr3 = (AutoCompleteTextView) findViewById(R.id.entry3);
 
-        ArrayAdapter <String> aa=new ArrayAdapter<String>(this,R.layout.select_dialog_item_material,entryNumbers);
-        entr1.setThreshold(1);entr1.setAdapter(aa);
-        entr2.setThreshold(1);entr2.setAdapter(aa);
-        entr3.setThreshold(1);entr3.setAdapter(aa);
+        ArrayAdapter <String> aa=new ArrayAdapter<String>(this,R.layout.select_dialog_item_material,nameAdapter);
+        name1.setThreshold(1);name1.setAdapter(aa);
+        name2.setThreshold(1);name2.setAdapter(aa);
+        name3.setThreshold(1);name3.setAdapter(aa);
 
         sendButton = (Button) findViewById(R.id.register);
         sendButton.setOnClickListener(this);
