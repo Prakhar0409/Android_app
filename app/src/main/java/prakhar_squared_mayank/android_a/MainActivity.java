@@ -16,8 +16,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -143,6 +147,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                if(error instanceof TimeoutError) {
+                    showToast("The connection timed out.");
+                } else if(error instanceof NoConnectionError) {
+                    showToast("No internet connection available.");
+                } else if(error instanceof NetworkError) {
+                    showToast("A network error occurred.");
+                } else if(error instanceof ServerError) {
+                    showToast("A server error occurred.");
+                } else {
+                    showToast("An unidentified error occurred.");
+                }
             }
         }){
             @Override
@@ -175,12 +190,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     {
         if(code.equals("1"))
         {
-            Toast.makeText(this, "Success with message: "+msg, Toast.LENGTH_SHORT).show();
+            showToast("Success with message: "+msg);
         }
         else
         {
-            Toast.makeText(this, "Failure with message: "+msg, Toast.LENGTH_SHORT).show();
+            showToast("Failure with message: "+msg);
         }
+    }
+
+    public void showToast(String msg)
+    {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -220,9 +240,5 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     public boolean checkData() {
         return true;
-    }
-
-    public void sendData() {
-
     }
 }
