@@ -1,5 +1,6 @@
 package prakhar_squared_mayank.android_a;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,6 +50,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     AutoCompleteTextView entr1;
     AutoCompleteTextView entr2;
     AutoCompleteTextView entr3;
+    ProgressDialog progressDialog;
     private AutoCompleteTextView team,name1,name2,name3;
 
     public String res_code="RESPONSE_SUCCESS";
@@ -55,14 +58,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     Button sendButton;
     private static final Pattern entryNumbersPat=Pattern.compile("201[234][A-Z][A-Z][1257]0[0-9]{3}",Pattern.CASE_INSENSITIVE );
 
-
-    //private String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
-//    private static final String[] ent=new String[];//{"prakhar","shubham","mohit"};
     private MediaPlayer sound_player;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.newtitle);
 /*
 * Logic for adding autocomplete feature*
 * */
@@ -149,52 +152,47 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         final String entry1s=entr1.getText().toString().trim();
         final String entry2s=entr2.getText().toString().trim();
         final String entry3s=entr3.getText().toString().trim();
-//        Map<String,String> params=new HashMap<String,String>();
-//        params.put("teamname",teams);
-//        params.put("name1",name1s);
-//        params.put("name2",name2s);
-//        params.put("name3",name3s);
-//        params.put("entry1",entry1s);
-//        params.put("entry2",entry2s);
-//        params.put("entry3", entry3s);
-//
-//        JSONObject param=new JSONObject(params);
+
         String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
 //        String url="http://cse.iitd.ac.in/scripts/test.php";
-      //  System.out.println("Someone clicked");
+        
 //        JsonObjectRequest req=new JsonObjectRequest(Request.Method.POST,url,param, new Response.Listener<JSONObject>() {
         StringRequest req=new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
                 try {
+                    progressDialog.dismiss();
                    // Log.d("Response", "Got Response");
                     JSONObject res = new JSONObject(response);
                     String success = res.getString(res_code);
                     String msg = res.getString(res_msg);
                     displayMessage(success, msg);
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);	//instantiating sound_player object with the sound associated with successful registration
                 } catch (Exception e) {
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 error.printStackTrace();
                 if(error instanceof TimeoutError) {
                     showToast("The connection timed out.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof NoConnectionError) {
                     showToast("No internet connection available.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof NetworkError) {
                     showToast("A network error occurred.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof ServerError) {
                     showToast("A server error occurred.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else {
                     showToast("An unidentified error occurred.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 }
             }
         }){
@@ -264,7 +262,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_main) {
+            openAbout();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -277,30 +276,30 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 hideKeyboard();
                 if(checkData())
                 {
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);
+                    showProgressDialog();
                     register();
                 }
                 else
                 {
-                    showToast("Input is invalid");
                     sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 }
-                sound_player.setLooping(false);
-                sound_player.start();
+                sound_player.setLooping(false);		//to paly the sound just once
+                sound_player.start();			//start sound play
                 break;
         }
     }
 
-
+    //function to hide keypad when screen is touched
     public void hideKeyboard()
-    {
+    { 	
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
+    //function to check the validity of the input data
     public boolean checkData() {
         String[] name = new String[3];
         String[] entry = new String[3];
@@ -329,7 +328,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 for(int nameIndex=0;nameIndex<name[index].length();nameIndex++)
                 {
                     int charASCII = (int)(name[index].charAt(nameIndex));
-                    if(!((charASCII >= (int)'a' && charASCII <= (int)'z')||(charASCII >= (int)'A' && charASCII <= (int)'Z')))
+                    if(!((charASCII >= (int)'a' && charASCII <= (int)'z')||(charASCII >= (int)'A' && charASCII <= (int)'Z')||(charASCII == (int)' ')))
                     {
                         showToast("Enter valid names.");
                         return false;
@@ -361,5 +360,18 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             return true;
         }
         return false;
+    }
+
+    public void showProgressDialog() {
+        progressDialog = new ProgressDialog(this, R.style.Base_Theme_AppCompat_Dialog);
+        progressDialog.setIndeterminate(true);
+        progressDialog.setTitle("Registering team...");
+        progressDialog.show();
+    }
+
+    //function to go to the AboutActivity
+    public void openAbout() {
+        Intent intent = new Intent(this, AboutActivity.class);
+	    startActivity(intent);
     }
 }
