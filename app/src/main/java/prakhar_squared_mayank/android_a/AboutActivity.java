@@ -10,4 +10,9 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
     }
+    //function to return to registration page
+    public void returnReg() {
+        Intent intent = new Intent(this, MainActivity.class);
+	startActivity(intent);
+    }
 }
