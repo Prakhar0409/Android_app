@@ -279,7 +279,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 }
                 else
                 {
-                    showToast("Input is invalid");
                     sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 }
                 sound_player.setLooping(false);
