@@ -177,13 +177,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
 
+    public void shar(View view){
+        goToNextActivity();
+    }
 
     public void displayMessage(String code, String msg)
     {
         if(code.equals("1"))
         {
             showToast("Success with message: "+msg);
-            goToNextActivity(code,msg);
+            goToNextActivity();//code,msg);
         }
         else
         {
@@ -191,7 +194,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
     }
 
-    private void goToNextActivity(String code, String msg) {
+    private void goToNextActivity(){//String code, String msg) {
         Intent intent=new Intent(getApplicationContext(),Result.class);
         startActivity(intent);
     }
