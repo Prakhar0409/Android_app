@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -46,13 +47,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     AutoCompleteTextView entr1;
     AutoCompleteTextView entr2;
     AutoCompleteTextView entr3;
+    private AutoCompleteTextView team,name1,name2,name3;
 
     public String res_code="RESPONSE_SUCCESS";
     public String res_msg="RESPONSE_MESSAGE";
     Button sendButton;
     private static final Pattern entryNumbersPat=Pattern.compile("201[234][A-Z][A-Z][1257]0[0-9]{3}",Pattern.CASE_INSENSITIVE );
 
-    private AutoCompleteTextView team,name1,name2,name3;
+
     //private String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
 //    private static final String[] ent=new String[];//{"prakhar","shubham","mohit"};
     private MediaPlayer sound_player;
@@ -63,8 +65,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 /*
 * Logic for adding autocomplete feature*
 * */
-        List<String> entries=new ArrayList<String>();
-        List<String> names=new ArrayList<String>();
+        final List<String> entries=new ArrayList<String>();
+        final List<String> names=new ArrayList<String>();
         try {
             InputStream is = getApplicationContext().getResources().openRawResource(R.raw.entry_number_list);//am.open("entry_number_list.txt");
             InputStreamReader inputStreamReader=new InputStreamReader(is);
@@ -88,7 +90,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String[] nameAdapter= (String[]) names.toArray(new String[names.size()]);
+        final String[] nameAdapter= (String[]) names.toArray(new String[names.size()]);
 
 
         team=(AutoCompleteTextView) findViewById(R.id.team);
@@ -103,6 +105,34 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         name1.setThreshold(1);name1.setAdapter(aa);
         name2.setThreshold(1);name2.setAdapter(aa);
         name3.setThreshold(1);name3.setAdapter(aa);
+
+        name1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos,long id) {
+                int index = names.indexOf(name1.getText().toString());
+                entr1.setText(entries.get(index));
+                //System.out.println("id of the selected string: "+index);
+            }
+        });
+        name2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                int index=names.indexOf(name2.getText().toString());
+                entr2.setText(entries.get(index));
+                //System.out.println("id of the selected string: "+index);
+            }
+        });
+        name3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos,long id) {
+                int index=names.indexOf(name3.getText().toString());
+                entr3.setText(entries.get(index));
+                //System.out.println("id of the selected string: "+index);
+            }
+        });
+        
         sendButton = (Button) findViewById(R.id.register);
         sendButton.setOnClickListener(this);
 /*Autocomplete textboxes logic end
@@ -130,7 +160,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 //        JSONObject param=new JSONObject(params);
         String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
 //        String url="http://cse.iitd.ac.in/scripts/test.php";
-        System.out.println("Someone clicked");
+      //  System.out.println("Someone clicked");
 //        JsonObjectRequest req=new JsonObjectRequest(Request.Method.POST,url,param, new Response.Listener<JSONObject>() {
         StringRequest req=new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
             @Override
