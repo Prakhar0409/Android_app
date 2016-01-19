@@ -132,7 +132,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 //System.out.println("id of the selected string: "+index);
             }
         });
-        
+
         sendButton = (Button) findViewById(R.id.register);
         sendButton.setOnClickListener(this);
 /*Autocomplete textboxes logic end
