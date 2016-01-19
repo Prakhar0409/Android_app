@@ -167,7 +167,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     String success = res.getString(res_code);
                     String msg = res.getString(res_msg);
                     displayMessage(success, msg);
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);	//instantiating sound_player object with the sound associated with successful registration
                 } catch (Exception e) {
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration
                     e.printStackTrace();
                 }
             }
@@ -178,19 +180,19 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 error.printStackTrace();
                 if(error instanceof TimeoutError) {
                     showToast("The connection timed out.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof NoConnectionError) {
                     showToast("No internet connection available.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof NetworkError) {
                     showToast("A network error occurred.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof ServerError) {
                     showToast("A server error occurred.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else {
                     showToast("An unidentified error occurred.");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 }
             }
         }){
@@ -273,31 +275,31 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 hideKeyboard();
                 if(checkData())
                 {
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);
+//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);
                     showProgressDialog();
                     register();
                 }
                 else
                 {
                     showToast("Input is invalid");
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration due to invalid input
                 }
-                sound_player.setLooping(false);
-                sound_player.start();
+                sound_player.setLooping(false);		//to paly the sound just once
+                sound_player.start();			//start sound play
                 break;
         }
     }
 
-
+    //function to hide keypad when screen is touched
     public void hideKeyboard()
-    {
+    { 	
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
+    //function to check the validity of the input data
     public boolean checkData() {
         String[] name = new String[3];
         String[] entry = new String[3];
@@ -365,5 +367,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         progressDialog.setIndeterminate(true);
         progressDialog.setTitle("Registering team...");
         progressDialog.show();
+    }
+    //function to go to the AboutActivity
+    public void openAbout() {
+        Intent intent = new Intent(this, AboutApp.class);
+	startActivity(intent);
     }
 }
