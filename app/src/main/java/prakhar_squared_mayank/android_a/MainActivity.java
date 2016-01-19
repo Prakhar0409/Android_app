@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
     AutoCompleteTextView entr1;
@@ -109,7 +110,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         name1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View arg1, int pos,long id) {
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                 int index = names.indexOf(name1.getText().toString());
                 entr1.setText(entries.get(index));
                 //System.out.println("id of the selected string: "+index);
@@ -119,15 +120,15 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
-                int index=names.indexOf(name2.getText().toString());
+                int index = names.indexOf(name2.getText().toString());
                 entr2.setText(entries.get(index));
                 //System.out.println("id of the selected string: "+index);
             }
         });
         name3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View arg1, int pos,long id) {
-                int index=names.indexOf(name3.getText().toString());
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
+                int index = names.indexOf(name3.getText().toString());
                 entr3.setText(entries.get(index));
                 //System.out.println("id of the selected string: "+index);
             }
@@ -301,6 +302,64 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     public boolean checkData() {
+        String[] name = new String[3];
+        String[] entry = new String[3];
+        String teamName=team.getText().toString().trim();
+        name[0]=name1.getText().toString().trim();
+        name[1]=name2.getText().toString().trim();
+        name[2]=name3.getText().toString().trim();
+        entry[0]=entr1.getText().toString().trim();
+        entry[1]=entr2.getText().toString().trim();
+        entry[2]=entr3.getText().toString().trim();
+
+        if(teamName.length() == 0)
+        {
+            showToast("Enter a team name.");
+            return false;
+        }
+        for(int index=0;index<3;index++)
+        {
+            if(name[index].length() == 0)
+            {
+                showToast("Enter all names.");
+                return false;
+            }
+            else
+            {
+                for(int nameIndex=0;nameIndex<name[index].length();nameIndex++)
+                {
+                    int charASCII = (int)(name[index].charAt(nameIndex));
+                    if(!((charASCII >= (int)'a' && charASCII <= (int)'z')||(charASCII >= (int)'A' && charASCII <= (int)'Z')))
+                    {
+                        showToast("Enter valid names.");
+                        return false;
+                    }
+                }
+            }
+            if(entry[index].length() == 0)
+            {
+                showToast("Enter all entry numbers.");
+                return false;
+            }
+            else
+            {
+                if(!checkEntryNumber(entry[index]))
+                {
+                    showToast("Enter valid entry number.");
+                    return false;
+                }
+            }
+        }
         return true;
+    }
+
+    public boolean checkEntryNumber(String number)
+    {
+        Matcher matcher = entryNumbersPat.matcher(number);
+        if(matcher.matches())
+        {
+            return true;
+        }
+        return false;
     }
 }
