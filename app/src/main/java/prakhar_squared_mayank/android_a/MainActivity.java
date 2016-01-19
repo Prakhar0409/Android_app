@@ -1,6 +1,7 @@
 package prakhar_squared_mayank.android_a;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -45,6 +46,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     AutoCompleteTextView entr1;
     AutoCompleteTextView entr2;
     AutoCompleteTextView entr3;
+
+    public String res_code="RESPONSE_SUCCESS";
+    public String res_msg="RESPONSE_MESSAGE";
     Button sendButton;
     private static final Pattern entryNumbersPat=Pattern.compile("201[234][A-Z][A-Z][1257]0[0-9]{3}",Pattern.CASE_INSENSITIVE );
     private EditText team,name1,name2,name3;
@@ -116,10 +120,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             @Override
             public void onResponse(String response) {
                 try {
-                    Log.d("Response", "Got Response");
+                   // Log.d("Response", "Got Response");
                     JSONObject res = new JSONObject(response);
-                    String success = res.getString("RESPONSE_SUCCESS");
-                    String msg = res.getString("RESPONSE_MESSAGE");
+                    String success = res.getString(res_code);
+                    String msg = res.getString(res_msg);
                     displayMessage(success, msg);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -171,17 +175,28 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         //  volley_singleton b=volley_singleton.getInstance();
         // b.getRequestQueue().add(req);
     }
+
+
+
     public void displayMessage(String code, String msg)
     {
         if(code.equals("1"))
         {
             showToast("Success with message: "+msg);
+            goToNextActivity(code,msg);
         }
         else
         {
             showToast("Failure with message: "+msg);
         }
     }
+
+    private void goToNextActivity(String code, String msg) {
+        Intent intent=new Intent(getApplicationContext(),Result.class);
+        startActivity(intent);
+    }
+
+
     public void showToast(String msg)
     {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
