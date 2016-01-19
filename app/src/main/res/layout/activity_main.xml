@@ -5,7 +5,7 @@
     android:id="@+id/scrollView1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#b0392b">
+    android:background="#dc2831">
 
 <LinearLayout
     android:orientation="vertical"
@@ -54,9 +54,11 @@
             android:layout_marginTop="10dp"/>
 
         <AutoCompleteTextView android:id="@+id/name1"
+            android:inputType="textNoSuggestions"
             android:layout_width="185dp"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
+            android:scrollHorizontally="true"
             android:textColorHint="@color/white"
             android:backgroundTint="@color/white"
             android:hint="@string/name1"
@@ -103,6 +105,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/name2"
             android:textColor="@color/white"
+            android:scrollHorizontally="true"
+            android:inputType="textNoSuggestions"
             android:textColorHint="@color/white"
             android:backgroundTint="@color/white"
             android:layout_toRightOf="@id/nameimage2"
@@ -150,7 +154,9 @@
         <AutoCompleteTextView android:id="@+id/name3"
             android:layout_width="185dp"
             android:layout_height="wrap_content"
+            android:inputType="textNoSuggestions"
             android:textColor="@color/white"
+            android:scrollHorizontally="true"
             android:textColorHint="@color/white"
             android:backgroundTint="@color/white"
             android:hint="@string/name3"
