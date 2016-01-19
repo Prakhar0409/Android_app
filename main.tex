@@ -1,0 +1,120 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+
+
+
+\begin{document}
+\begin{titlepage}
+\title{COP290}
+\centering
+{\scshape\Large COP290\par}
+\vspace{1cm}
+{\scshape\Huge User Registration Android App\par}
+
+\vspace{3cm}
+	{\Large\itshape Mayank Rajoria (2014CS10233)\par}
+\vspace{0.3cm}
+	{\Large\itshape Prakhar Gupta (2014CS10***)\par}
+\vspace{0.3cm}
+	{\Large\itshape Prakhar Agarwal (2014CS10207)\par}
+
+\vfill
+\raggedleft
+Course  Coordinator\\
+Vinay Joseph Ribeiro
+% \vfill
+\end{titlepage}
+
+\begin{abstract}
+The purpose of this assignment was to create a basic android app. The android app would contain a simple form which would accept some data like team name and details of its members. This data would be sent to a server provided to us for registration of the said team. The most important part of the application is to be able to send a POST request to the given server with the data and show the response to the user. The application has been made in order to follow the design practices by Google and made as user friendly as possible.
+% \vfill
+\end{abstract}
+
+
+% Mention the detailed description of what the application does.
+
+\section{Introduction}
+The android app was made using the open source Android SDK provided by Google Inc. The application first provides user with a form. This for asks for the team name to be registered and the names and entry numbers of the team members to be registered.
+\par
+The app itself provides an auto suggest menu when the user starts entering their names. The suggestions are from among the names of CS Btech and Dual degree students at IIT Delhi from the entry year 2014. On selection of any name, the entry number of the selected student is automatically added. Once this data is entered and the user wishes to register for the course, the app itself first performs a validation on the data provided. All fields are checked whether they are filled or not, whether the names entered contain only alphabets and whether the format of entry numbers are correct.
+\par
+Upon validation of the data, the data is sent to the server via a POST request using the Volley library for Android. The app receives the response from the server or the android system informing it of the server response of any other network error. These errors are appropriately handled and corresponding messages are shown to the user. Appropriate sounds are also played to provide audio response to the user.
+\par
+Finally the user is shown a page on successful registration where they are also given an option to share the app with other people via various media.
+
+\section{User Interface}
+\subsection{Registration Screen}
+
+\begin{figure}[!ht]
+	\centering
+% 	\includegraphics[width=0.5\textwidth]{./UserInterface}
+	\caption{Registration Screen}
+\end{figure}
+
+
+
+\begin{itemize}
+\setlength\itemsep{-0.4em}
+\item This screen presents the registration form to the user. It has 7 text boxes to enter the data.
+\item The first text box accepts the team name.
+\item The next text box is for the team member's name. Once the user starts entering the data into this text box, suggestions are displayed for the name.
+\item The entry number text box takes the entry number of the corresponding student.
+\item Finally there is the "Submit" button to send the data to register for the course.
+\end{itemize}
+
+\begin{itemize}
+\setlength\itemsep{-0.4em}
+\item The team name can be anything apart from an empty string.
+\item The name of a student can contain only English alphabet characters and space characters.
+\item The entry number is check for its correct format using Regex format.
+\item All inputs are first trimmed of trailing white spaces before performing the above checks.
+\end{itemize}
+
+\begin{itemize}
+\setlength\itemsep{-0.4em}
+\item When the user starts entering the data into this text box, suggestions are displayed from among the 2014 CSE entry students in IIT Delhi. Upon selecting a name, their entry number is automatically entered in their entry number text box.
+\item On pressing the submit button, all of user's data is validated using the above guidelines. and appropriate message is displayed in the form of a Toast in case of errors found.
+\item If all the entered data is correct, the data is submitted to the given URL and its response is displayed to the user.
+\item Upon successful registration, the user is taken to the corresponding screen.
+\end{itemize}
+
+\subsection{Success Screen}
+
+\begin{figure}[!ht]
+	\centering
+% 	\includegraphics[width=0.5\textwidth]{./UserInterface}
+	\caption{Success Screen}
+\end{figure}
+
+\begin{itemize}
+\setlength\itemsep{-0.4em}
+\item This screen basically displays a success message to the user.
+\item The user is also provided with a button to share their success and invite more students to register for the course using this app.
+\end{itemize}
+
+\begin{itemize}
+\setlength\itemsep{-0.4em}
+\item Upon clicking the share button an Intent is created which contains a message and a link to be shared.
+\item This intent is passed on to the system to create a chooser of various apps to allow the user to choose where to share the message.
+\end{itemize}
+
+\section{Implementation Details}
+
+\begin{itemize}
+\item Organization of user information (Is it in a special User class, or is it distributed in arrays for each user entry)
+\item Methods to verify the user information: Highlight the errors handled by the code
+	\begin{itemize}
+		\item How to make sure that the user is entering a valid entry number
+		\item How to make sure that the user is entering a valid name
+	\end{itemize}
+\item Methods for network communication. You can cite material that you used to create the application~\cite{android_network_tutorial}.
+\end{itemize}
+
+The code for the project is being maintained in this repository: \url{ https://github.com/Prakhar0409/Android\_app.git}.
+
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\end{document}

@@ -10,8 +10,21 @@
     tools:context="prakhar_squared_mayank.android_a.AboutActivity">
 
     <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/abouttext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="yo gupta" />
+        android:text="@string/about_text" />
+
+    <!-- button to go back to registration page-->
+    <Button
+        android:id="@+id/back_to_reg"
+        android:layout_below="@id/abouttext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/return_to_regi"
+	    android:onClick="returnReg" />
+
 
 </RelativeLayout>
