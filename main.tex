@@ -16,9 +16,9 @@
 \vspace{3cm}
 	{\Large\itshape Mayank Rajoria (2014CS10233)\par}
 \vspace{0.3cm}
-	{\Large\itshape Prakhar Gupta (2014CS10***)\par}
+	{\Large\itshape Prakhar Gupta (2014CS10290)\par}
 \vspace{0.3cm}
-	{\Large\itshape Prakhar Agarwal (2014CS10207)\par}
+	{\Large\itshape Prakhar Agrawal (2014CS10207)\par}
 
 \vfill
 \raggedleft
@@ -45,6 +45,8 @@ Upon validation of the data, the data is sent to the server via a POST request u
 Finally the user is shown a page on successful registration where they are also given an option to share the app with other people via various media.
 
 \section{User Interface}
+\par
+The application interface is divided into three screens. The main screen that provides the Registration utility is the one that opens up when you open the application. The action button on the top screen provides an option to jump to the about screen that provides information about the app. The third screen is the success message screen that appears when a team successfully submits its information and passes the validation
 \subsection{Registration Screen}
 
 \begin{figure}[!ht]
@@ -68,7 +70,7 @@ Finally the user is shown a page on successful registration where they are also 
 \setlength\itemsep{-0.4em}
 \item The team name can be anything apart from an empty string.
 \item The name of a student can contain only English alphabet characters and space characters.
-\item The entry number is check for its correct format using Regex format.
+\item The entry number is checked for its correct format using the language of Regular Expression.
 \item All inputs are first trimmed of trailing white spaces before performing the above checks.
 \end{itemize}
 
@@ -100,19 +102,76 @@ Finally the user is shown a page on successful registration where they are also 
 \item This intent is passed on to the system to create a chooser of various apps to allow the user to choose where to share the message.
 \end{itemize}
 
+
+\subsection{About Screen}
+
+\begin{figure}[!ht]
+	\centering
+% 	\includegraphics[width=0.5\textwidth]{./UserInterface}
+	\caption{About Screen}
+\end{figure}
+
+\begin{itemize}
+\setlength\itemsep{-0.4em}
+\item This screen basic information relating to the application.
+\item This screen introduces user to the course COP290 and seeks to popularize it among the application users.
+\item This is a stationary UI without much of a functionality apart from information providing.
+\end{itemize}
+
+
+
+
 \section{Implementation Details}
 
 \begin{itemize}
-\item Organization of user information (Is it in a special User class, or is it distributed in arrays for each user entry)
-\item Methods to verify the user information: Highlight the errors handled by the code
-	\begin{itemize}
-		\item How to make sure that the user is entering a valid entry number
-		\item How to make sure that the user is entering a valid name
-	\end{itemize}
-\item Methods for network communication. You can cite material that you used to create the application~\cite{android_network_tutorial}.
+\subsection{Posting Data}
+\item The crux of the application is the implementation of the POST request and sending this to the provided server http://agni.cse.iitd.ac.in.
+\item This has been done using "Volley" which is a networking library for android applications and has a huge upcoming community support.
+\item Volley was included to the project and a String request was generated using the data submitted via the form on the Registration page screen.
+\item The response String was then parsed into JSON format and then using the response code appropriate response was generated using the android Toast.
+\item Methods for network communication: The onClickListener for the button register. It further calls the method register that posts the data to the server upon validation via the checkData() method.
 \end{itemize}
 
-The code for the project is being maintained in this repository: \url{ https://github.com/Prakhar0409/Android\_app.git}.
+
+\subsection{Validation}
+\begin{itemize}
+\item Validating data before posting it to the server is an important part of the application as it does not allow fake/invalid users to register for the course via the application interface.
+\item This is implemented via the checkData() function in the same module. It checks for names being only sets of strings separated by white spaces.
+\item checkEntryNumber() is another function that handles the validation for the Entry number boxes of the application.
+\item We check for entry number via the pattern matching in form of Regular expressions.
+\item \textbf{Error Cases Handled:}
+\begin{itemize}
+		\item In TeamName: All Strings except the empty string are accepted. Handled in the method checkData().
+		\item In Names: Characters other than [A-Za-z" "] in the entry number are not allowed in the names. Handled in the method checkData().
+        \item In EntryNumbers: Check for all errors of incorrect number of characters or incorrect position of letters or invalid entry year. Handled in the method checkEntryNumber(). All probable error cases are extensively handled using simple regular expression.
+	\end{itemize}
+\end{itemize}
+    
+    
+   
+    
+\subsection{Autocomplete \& IntelliSense}
+\begin{itemize}
+\item On writing first few characters of name, the application starts suggesting people it thinks you may be naming. Since we had access to only data of the department people, suggestions are based on this data only.
+\item Similar suggestions appear on typing entry numbers using the same AutocompleteTextView.
+\item On completing the name field the application tends to complete the entry number field correctly by automatically determining the person's identity based on the name. This is the IntelliSense feature which is unique to our application.
+\item This feature is based on our access to the department data from the CSE website. We store entries of student names vs entry numbers which we later use to predict entry numbers based on names.
+\end{itemize}
+
+\section{Project repository and guildlines for Contribution}
+\par The code for the project is being maintained in this repository: \url{ https://github.com/Prakhar0409/Android\_app.git}.
+Read the contribution guidlines given on the github project page to contribute. Don't forget to document changes. 
+\textbf{Voila! you have made it till the end.}
+
+\section{Citations}
+\begin{itemize}
+\item \url{ developer.android.com/training/index.html}
+\item \url{www.javatpoint.com/android-tutorial}
+\item \url{developer.android.com/training/volley/index.html}
+\item \url{http://stackoverflow.com/questions/33573803/how-to-send-a-post-request-using-volley-with-string-body}
+\end{itemize}
+
+
 
 \bibliographystyle{abbrv}
 \bibliography{references}
