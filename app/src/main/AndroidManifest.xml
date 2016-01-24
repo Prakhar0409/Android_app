@@ -3,6 +3,7 @@
     package="prakhar_squared_mayank.android_a">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="true"

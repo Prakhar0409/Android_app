@@ -20,10 +20,9 @@ public class volley_singleton{//} extends Application {
 
     public volley_singleton(Context context){
         con=context;
-        //super.onCreate();
 
-        requestQueue= getRequestQueue();  //Volley.newRequestQueue(getApplicationContext());
-      //  insta=this;
+        requestQueue= getRequestQueue();
+
     }
 
     public static synchronized volley_singleton getInstance(Context context){
@@ -36,16 +35,13 @@ public class volley_singleton{//} extends Application {
 
     public RequestQueue getRequestQueue(){
         if (requestQueue== null) {
-            requestQueue = Volley.newRequestQueue(con, 10 * 1024 * 1024); // this for caching
+            requestQueue = Volley.newRequestQueue(con, 10 * 1024 * 1024); // this is for caching request
         }
 
         return requestQueue;
     }
 
     public <T> void add(Request<T> req){
-//        if(requestQueue==null){
-//            requestQueue=Volley.newRequestQueue(con.getApplicationContext(), 10 * 1024 * 1024);
-//        }
         getRequestQueue().add(req);
     }
     public void cancel(){

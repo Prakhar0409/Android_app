@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,8 +63,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     //received response codes variables
     public String res_code="RESPONSE_SUCCESS";
     public String res_msg="RESPONSE_MESSAGE";
-   // SurfaceHolder surfaceHolder;
-  //  surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+
 
     //Send button on registeration layout screen
     Button sendButton;
@@ -141,7 +141,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                 int index = names.indexOf(name1.getText().toString());
                 entr1.setText(entries.get(index));
-                //System.out.println("id of the selected string: "+index);
             }
         });
         name2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -150,7 +149,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                 int index = names.indexOf(name2.getText().toString());
                 entr2.setText(entries.get(index));
-                //System.out.println("id of the selected string: "+index);
             }
         });
         name3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -158,7 +156,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             public void onItemClick(AdapterView<?> parent, View arg1, int pos, long id) {
                 int index = names.indexOf(name3.getText().toString());
                 entr3.setText(entries.get(index));
-                //System.out.println("id of the selected string: "+index);
             }
         });
 
@@ -182,7 +179,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         final String entry3s=entr3.getText().toString().trim();
 
         String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
-        //  String url="http://cse.iitd.ac.in/scripts/test.php";
 
         StringRequest req=new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
             @Override
@@ -190,7 +186,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
                 try {
                     progressDialog.dismiss();
-                   // Log.d("Response", "Got Response");
                     JSONObject res = new JSONObject(response);      //parsing into JSON response format
                     String success = res.getString(res_code);
                     String msg = res.getString(res_msg);
@@ -200,6 +195,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration
                     sound_player.setLooping(false);
                     sound_player.start();
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    v.vibrate(150);
                     e.printStackTrace();
                 }
             }
@@ -209,6 +206,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration
                 sound_player.setLooping(false);
                 sound_player.start();
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(150);
 
                 progressDialog.dismiss();
                 error.printStackTrace();
@@ -222,7 +221,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     showToast("A server error occurred.");
                 } else {
                     showToast("An unidentified error occurred.");
-//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 }
             }
         }){
@@ -268,15 +266,17 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
         else
         {
-            showToast("Failure with message: "+msg);
+            showToast("Failure with message: " + msg);
             sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration
             sound_player.setLooping(false);
             sound_player.start();
+            Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            v.vibrate(150);
         }
     }
 
     // sends user to the next activity if he successfully has posted data
-    private void goToNextActivity(){//String code, String msg) {
+    private void goToNextActivity(){
         Intent intent=new Intent(getApplicationContext(),Result.class);
         startActivity(intent);
     }
@@ -324,7 +324,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 hideKeyboard();
                 if(checkData())
                 {
-//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);
                     showProgressDialog();
                     register();
                 }
@@ -333,11 +332,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                     sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                     sound_player.setLooping(false);        //to paly the sound just once
                     sound_player.start();            //start sound play
+                    Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                    v.vibrate(150);
                 }
-//                if(sound_player!=null) {
-//                    sound_player.setLooping(false);        //to paly the sound just once
-//                    sound_player.start();            //start sound play
-//                }
                 break;
             case R.id.linear1:
                 hideKeyboard();
