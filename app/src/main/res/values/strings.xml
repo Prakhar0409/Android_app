@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android_a</string>
+    <string name="app_name">COP290 Registration</string>
     <string name="result_title">Result</string>
     <string name="teamname">Enter your team name</string>
     <string name="name1">Name of Member 1</string>

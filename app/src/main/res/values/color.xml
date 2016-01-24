@@ -16,6 +16,7 @@
     <color name="newtitlebackgroundcolor">#9b3225</color>
 
     <integer-array name="androidcolors">
+
         <item>@color/blue</item>
         <item>@color/purple</item>
         <item>@color/green</item>
