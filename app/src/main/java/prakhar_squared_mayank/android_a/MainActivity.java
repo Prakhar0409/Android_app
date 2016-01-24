@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -44,6 +46,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
@@ -53,22 +57,38 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     ProgressDialog progressDialog;
     private AutoCompleteTextView team,name1,name2,name3;
 
+
+    final Context context = this;
+    //received response codes variables
     public String res_code="RESPONSE_SUCCESS";
     public String res_msg="RESPONSE_MESSAGE";
-    Button sendButton;
-    private static final Pattern entryNumbersPat=Pattern.compile("201[234][A-Z][A-Z][1257]0[0-9]{3}",Pattern.CASE_INSENSITIVE );
+   // SurfaceHolder surfaceHolder;
+  //  surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
 
+    //Send button on registeration layout screen
+    Button sendButton;
+    //entry number regular expression to use during the validation
+    private static final Pattern entryNumbersPat=Pattern.compile("201[234][A-Z][A-Z][1257]0[0-9]{3}",Pattern.CASE_INSENSITIVE );
+    //sound player to produce different sounds on clicking the register button
     private MediaPlayer sound_player;
 
+    /*
+      *  The onCreate method is called when the app reaches this activity first time.
+      *  It sets the view content and waits for event occurances
+      *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.newtitle);
-/*
-* Logic for adding autocomplete feature*
-* */
+
+
+        LinearLayout l=(LinearLayout) findViewById(R.id.linear1);
+        l.setOnClickListener(this);
+
+    /*
+    * Logic for adding autocomplete feature
+    * */
         final List<String> entries=new ArrayList<String>();
         final List<String> names=new ArrayList<String>();
         try {
@@ -110,6 +130,11 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         name2.setThreshold(1);name2.setAdapter(aa);
         name3.setThreshold(1);name3.setAdapter(aa);
 
+            /*
+            * The code below handles completion of entry number boxes on entering data in the name text fields
+            *
+            * */
+
         name1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -139,10 +164,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         sendButton = (Button) findViewById(R.id.register);
         sendButton.setOnClickListener(this);
-/*Autocomplete textboxes logic end
-*
-* When button is pressed
-* */
+/*Autocomplete entry textboxes logic end */
+
+
+        /*
+        * the following method creates a post request using volley and sends it onto the server.
+        * This method is called after the validation
+        * */
     }
     public void register(){
         final String teams=team.getText().toString().trim();
@@ -154,42 +182,44 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         final String entry3s=entr3.getText().toString().trim();
 
         String url="http://agni.iitd.ernet.in/cop290/assign0/register/";
-//        String url="http://cse.iitd.ac.in/scripts/test.php";
-        
-//        JsonObjectRequest req=new JsonObjectRequest(Request.Method.POST,url,param, new Response.Listener<JSONObject>() {
+        //  String url="http://cse.iitd.ac.in/scripts/test.php";
+
         StringRequest req=new StringRequest(Request.Method.POST,url,new Response.Listener<String>(){
             @Override
             public void onResponse(String response) {
+
                 try {
                     progressDialog.dismiss();
                    // Log.d("Response", "Got Response");
-                    JSONObject res = new JSONObject(response);
+                    JSONObject res = new JSONObject(response);      //parsing into JSON response format
                     String success = res.getString(res_code);
                     String msg = res.getString(res_msg);
                     displayMessage(success, msg);
-                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);	//instantiating sound_player object with the sound associated with successful registration
+
                 } catch (Exception e) {
                     sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration
+                    sound_player.setLooping(false);
+                    sound_player.start();
                     e.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration
+                sound_player.setLooping(false);
+                sound_player.start();
+
                 progressDialog.dismiss();
                 error.printStackTrace();
                 if(error instanceof TimeoutError) {
                     showToast("The connection timed out.");
-//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof NoConnectionError) {
                     showToast("No internet connection available.");
-//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof NetworkError) {
                     showToast("A network error occurred.");
-//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else if(error instanceof ServerError) {
                     showToast("A server error occurred.");
-//                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
                 } else {
                     showToast("An unidentified error occurred.");
 //                    sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
@@ -213,12 +243,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 return "application/x-www-form-urlencoded;";
             }
         };
-        Volley.newRequestQueue(this).add(req);
-//        if(volley_singleton.getInstance()==null) {
-//            volley_singleton a = new volley_singleton();
-//        }
-        //  volley_singleton b=volley_singleton.getInstance();
-        // b.getRequestQueue().add(req);
+        volley_singleton.getInstance(context).getRequestQueue().add(req);
     }
 
 
@@ -226,35 +251,50 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         goToNextActivity();
     }
 
+    /*
+    * The following method displays result based on response from the register method that posts data
+    * */
+
     public void displayMessage(String code, String msg)
     {
         if(code.equals("1"))
         {
             showToast("Success with message: "+msg);
+            sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_sucess);	//instantiating sound_player object with the sound associated with failed registration
+            sound_player.setLooping(false);
+            sound_player.start();
             goToNextActivity();//code,msg);
+
         }
         else
         {
             showToast("Failure with message: "+msg);
+            sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);	//instantiating sound_player object with the sound associated with failed registration
+            sound_player.setLooping(false);
+            sound_player.start();
         }
     }
 
+    // sends user to the next activity if he successfully has posted data
     private void goToNextActivity(){//String code, String msg) {
         Intent intent=new Intent(getApplicationContext(),Result.class);
         startActivity(intent);
     }
 
 
+    //Shows toast with appropriate responses
     public void showToast(String msg)
     {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -268,8 +308,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /*
+    * The following cide defines onClick Listener for the buttons on the current activity. Here only register
+    * This is the code that is run when the user clicks on the button to register. The checkData function is called from here and on successful
+    * validation the data is sent to register activity which then forwards it to the server
+    * */
     @Override
     public void onClick(View view) {
+        if(sound_player!=null)
+            sound_player=null;//.stop();
         switch(view.getId())
         {
             case R.id.register:
@@ -283,9 +331,16 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 else
                 {
                     sound_player = MediaPlayer.create(MainActivity.this, R.raw.check_data_fail);
+                    sound_player.setLooping(false);        //to paly the sound just once
+                    sound_player.start();            //start sound play
                 }
-                sound_player.setLooping(false);		//to paly the sound just once
-                sound_player.start();			//start sound play
+//                if(sound_player!=null) {
+//                    sound_player.setLooping(false);        //to paly the sound just once
+//                    sound_player.start();            //start sound play
+//                }
+                break;
+            case R.id.linear1:
+                hideKeyboard();
                 break;
         }
     }
@@ -352,6 +407,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         return true;
     }
 
+
+    //this method is a part of data validation and checks for entry numbers matching to the regular expression defined on the top
     public boolean checkEntryNumber(String number)
     {
         Matcher matcher = entryNumbersPat.matcher(number);

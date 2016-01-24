@@ -7,7 +7,7 @@
     android:layout_height="fill_parent"
     android:background="#dc2831">
 
-<LinearLayout
+<LinearLayout   android:id="@+id/linear1"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -194,11 +194,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/button_send"
-        android:background="@drawable/button_border"
-        android:layout_marginTop="30dp"
+        android:background="#ffffff"
+        android:foreground="?attr/selectableItemBackground"
+        android:bottomRightRadius="2dp"
+        android:bottomLeftRadius="2dp"
+        android:topLeftRadius="2dp"
+        android:topRightRadius="2dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center"
         android:onClick="register"/>
-
+    <!--android:background="@drawable/button_border"-->
     <Button android:id="@+id/shareSuccess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
