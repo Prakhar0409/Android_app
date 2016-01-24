@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="/Users/mayank/GitHub/Android_app/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/classes-555c53f3b0126a4fee5a502c43b068a64e2ee72a.jar" />
+    </item>
+    <item
         jar="/Users/mayank/GitHub/Android_app/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.1/jars/libs/internal_impl-22.2.1.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -23,10 +30,17 @@
         <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.1-a32b0c16b6a5738b8624008c0d12164ebe780fd3.jar" />
     </item>
     <item
+        jar="/Users/mayank/GitHub/Android_app/app/build/intermediates/exploded-aar/com.android.support/design/22.2.1/jars/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="1821601ddbec5ff125653097812823388700af74">
+        <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/classes-6b4db914bd7fb78be7588b94b1cd7ac671ad850d.jar" />
+    </item>
+    <item
         jar="/Users/mayank/GitHub/Android_app/app/build/intermediates/exploded-aar/Android_app/volley/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="c19e860da8d3529e5bcd760cdc76d90d987e48e5">
+        sha1="195aed7132fa572a5942b4057895207dca4e5e97">
         <dex dex="/Users/mayank/GitHub/Android_app/app/build/intermediates/pre-dexed/debug/classes-966bbf44d76cb30befdc4a3e89050d808d2988cf.jar" />
     </item>
 

@@ -1,30 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#dc2831">
+<RelativeLayout 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="prakhar_squared_mayank.android_a.AboutActivity">
+    tools:context="prakhar_squared_mayank.android_a.AboutActivity"
+    android:background="#dc2831"
+    android:gravity="center|center_horizontal">
 
     <TextView
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="0dp"
+        android:id="@+id/activityName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:gravity="center"
+        android:textColor="#FFFFFFFF"
+        android:textSize="40dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_below="@id/activityName"
+        android:layout_marginTop="30dp"
         android:id="@+id/abouttext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/about_text" />
+        android:text="@string/about_text"
+        android:gravity="center"
+        android:textColor="#FFFFFFFF"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_below="@id/abouttext"
+        android:layout_marginTop="30dp"
+        android:id="@+id/madeby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/made_by"
+        android:gravity="center"
+        android:textColor="#FFFFFFFF"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp" />
 
     <!-- button to go back to registration page-->
     <Button
         android:id="@+id/back_to_reg"
-        android:layout_below="@id/abouttext"
+        android:layout_below="@id/madeby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:text="@string/return_to_regi"
-	    android:onClick="returnReg" />
+        android:onClick="returnReg"
+        android:layout_marginTop="40dp"
+        android:padding="10dp"
+        android:background="@drawable/ripple_effect"
+        android:bottomRightRadius="2dp"
+        android:bottomLeftRadius="2dp"
+        android:topLeftRadius="2dp"
+        android:topRightRadius="2dp"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>
+</ScrollView>
